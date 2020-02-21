@@ -1,0 +1,33 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb", "prettier"],
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true
+  },
+  "rules": {
+    "camelcase": 0,
+    "no-console": 0,
+    "global-require": 0,
+    "max-classes-per-file": 0,
+    "prefer-destructuring": 0,
+    "import/no-dynamic-require": 0,
+    "import/no-extraneous-dependencies": 0,
+    "react/prop-types": 0,
+    "react/no-this-in-sfc": 0,
+    "react/jsx-wrap-multilines": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "react/destructuring-assignment": 0,
+    "react/jsx-props-no-spreading": 0,
+    "no-restricted-syntax": [
+      "error",
+      {
+        "selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
+        "message": "Unexpected property on console object was called"
+      }
+    ],
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0
+  }
+}
