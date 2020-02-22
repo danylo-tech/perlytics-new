@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import TimeMenu from '../../components/TimeMenu';
-import TimeSelect from '../../components/TimeSelect';
+// import TimeSelect from '../../components/TimeSelect';
 import DatePicker from '../../components/DatePicker';
 import Gcals from '../../components/Charts/Gcals';
 import SimpleBarChart from '../../components/Charts/SimpleBarChart';
@@ -15,7 +15,7 @@ class HomeScreen extends Component {
 
     this.state = {
       date: new Date(),
-      time_interval: 'day',
+      timePeriod: 'day',
       api_data: null,
     };
   }
@@ -36,22 +36,33 @@ class HomeScreen extends Component {
   };
 
   cbTimeInterval = childData => {
-    this.setState({ time_interval: childData });
+    this.setState({ timePeriod: childData });
     this.getData();
   };
 
-  getData = nextProps => {
+  getData = (nextProps, tPeriod) => {
     const { userInfo } = nextProps || this.props;
+    const { timePeriod } = this.state;
+
+    const timeInterval = tPeriod || timePeriod;
 
     if (!userInfo) return;
 
+    this.setState({ api_data: null, timePeriod: timeInterval });
+
+    console.log(timeInterval);
     Axios.post('http://youta-api.ngrok.io/api7/', {
-      interval: this.state.time_interval,
+      interval: timeInterval,
       email: userInfo.email,
     }).then(res => {
       const api_data = res.data;
+      console.log(api_data);
       this.setState({ api_data });
     });
+  };
+
+  setTimePeriod = period => {
+    this.getData(null, period);
   };
 
   render() {
@@ -65,16 +76,16 @@ class HomeScreen extends Component {
       return (
         <div className="container">
           <h3>Time Period Options</h3>
-          <TimeMenu />
-          <TimeSelect cbTimeInterval={this.cbTimeInterval} />
+          <TimeMenu timePeriod={this.state.timePeriod} setTimePeriod={this.setTimePeriod} />
+          {/* <TimeSelect cbTimeInterval={this.cbTimeInterval} /> */}
         </div>
       );
 
     return (
       <div className="container">
         <h3>Time Period Options</h3>
-        <TimeMenu />
-        <TimeSelect cbTimeInterval={this.cbTimeInterval} />
+        <TimeMenu timePeriod={this.state.timePeriod} setTimePeriod={this.setTimePeriod} />
+        {/* <TimeSelect cbTimeInterval={this.cbTimeInterval} /> */}
         <DatePicker cbDate={this.cbDate} />
         <h3>Calendar Events</h3>
         <Gcals data={api_data.gcal.daily} />
