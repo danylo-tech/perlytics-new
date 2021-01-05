@@ -13,7 +13,7 @@
     "@hot-loader/react-dom": "^16.8.6",
     "@material-ui/core": "^4.9.3",
     "@material-ui/pickers": "^3.2.10",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "date-fns": "^2.0.0-beta.5",
     "express": "^4.17.1",
